@@ -8,7 +8,6 @@ using EmployeeBusiness;
 
 namespace HelloWebAPI.Controllers
 {
-    //test
     [RoutePrefix("api/Department")]
     public class DepartmentController : ApiController
     {
