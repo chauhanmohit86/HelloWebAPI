@@ -50,6 +50,7 @@
     <Compile Include="DepartmentProcessor.cs" />
     <Compile Include="EmployeeProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Employee.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestDemoData\TestDemoData.csproj">

@@ -5,30 +5,62 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using EmployeeBusiness;
+using EmployeeBusiness.ViewModels;
+using System.Web.Http.Description;
+using System.Threading.Tasks;
+using TestDemoData;
 
 namespace HelloWebAPI.Controllers
 {
     [RoutePrefix("api/Employee")]
     public class EmployeeController : ApiController
     {
+        OrganizationEntities ON = new OrganizationEntities();
         EmployeeProcessor EP = new EmployeeProcessor();
+
+        //[Route("{EmpId:int}")]
+        //[System.Web.Http.AcceptVerbs("GET", "POST")]
+        //[System.Web.Http.HttpPost]
+        //public HttpResponseMessage GetEmployeeById(int EmpId)
+        //{
+        //    string employee = string.Empty;
+        //    try
+        //    {
+        //        employee = EP.GetEmployeeById(EmpId.ToString());
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+        //    }
+        //    return Request.CreateResponse(HttpStatusCode.OK, employee);
+        //}
 
         [Route("{EmpId:int}")]
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        [System.Web.Http.HttpPost]
-        public HttpResponseMessage GetEmployeeById(int EmpId)
+        [System.Web.Http.HttpGet]
+        [ResponseType(typeof(Employee))]
+        public async Task<IHttpActionResult> GetEmployeeById(int EmpId)
         {
-            string employee = string.Empty;
-            try
+            
+            EmployeeDetail emp = await ON.EmployeeDetails.FindAsync(EmpId.ToString());
+
+            Employee employee = new Employee()
             {
-                employee = EP.GetEmployeeById(EmpId.ToString());
-                
-            }
-            catch (Exception ex)
+                EmployeeName = emp.EmployeeName,
+                EmployeeID = emp.EmployeeID,
+                EmailID = emp.EmailID,
+                Phone = emp.Phone,
+                Salary = emp.Salary,
+                City = emp.City
+            };
+
+            //employee = EP.GetEmployeeById(EmpId.ToString());
+            if (emp == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                return NotFound();
             }
-            return Request.CreateResponse(HttpStatusCode.OK, employee);
+            return Ok(employee);
         }
 
         [Route("")]

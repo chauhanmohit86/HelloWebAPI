@@ -334,6 +334,10 @@
       <Project>{4512f228-00d6-4667-8c51-0b49b8b21acc}</Project>
       <Name>EmployeeBusiness</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestDemoData\TestDemoData.csproj">
+      <Project>{4F42097A-F5FF-4A9A-BA91-D5C259FDAEFF}</Project>
+      <Name>TestDemoData</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
