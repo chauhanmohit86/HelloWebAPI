@@ -42,25 +42,24 @@ namespace HelloWebAPI.Controllers
         [ResponseType(typeof(Employee))]
         public async Task<IHttpActionResult> GetEmployeeById(int EmpId)
         {
-            
-            EmployeeDetail emp = await ON.EmployeeDetails.FindAsync(EmpId.ToString());
-
-            Employee employee = new Employee()
-            {
-                EmployeeName = emp.EmployeeName,
-                EmployeeID = emp.EmployeeID,
-                EmailID = emp.EmailID,
-                Phone = emp.Phone,
-                Salary = emp.Salary,
-                City = emp.City
-            };
-
-            //employee = EP.GetEmployeeById(EmpId.ToString());
+            EmployeeDetail emp = await EP.GetEmployeeById(EmpId);
             if (emp == null)
             {
                 return NotFound();
             }
-            return Ok(employee);
+            else
+            {
+                Employee employee = new Employee()
+                {
+                    EmployeeName = emp.EmployeeName,
+                    EmployeeID = emp.EmployeeID,
+                    EmailID = emp.EmailID,
+                    Phone = emp.Phone,
+                    Salary = emp.Salary,
+                    City = emp.City
+                };
+                return Ok(employee);
+            }
         }
 
         [Route("")]

@@ -29,25 +29,32 @@ namespace EmployeeBusiness
 
                 return jsonSerialiser.Serialize(data);
             }
-        } 
+        }
 
-        public string GetEmployeeById(string EmployeeId)
+        //public string GetEmployeeById(string EmployeeId)
+        //{
+        //    using (OrganizationEntities ON = new OrganizationEntities())
+        //    {
+        //        var data = (from e in ON.EmployeeDetails
+        //                    select new
+        //                    {
+        //                        e.EmployeeID,
+        //                        e.EmployeeName,
+        //                        e.EmailID,
+        //                        e.Phone,
+        //                        e.Salary,
+        //                        e.City
+        //                    }).Where(x=>x.EmployeeID == EmployeeId);
+
+        //        return jsonSerialiser.Serialize(data);
+        //    }
+        //}
+
+        public async Task<EmployeeDetail> GetEmployeeById(int EmployeeId)
         {
-            using (OrganizationEntities ON = new OrganizationEntities())
-            {
-                var data = (from e in ON.EmployeeDetails
-                            select new
-                            {
-                                e.EmployeeID,
-                                e.EmployeeName,
-                                e.EmailID,
-                                e.Phone,
-                                e.Salary,
-                                e.City
-                            }).Where(x=>x.EmployeeID == EmployeeId);
-                                
-                return jsonSerialiser.Serialize(data);
-            }
+            OrganizationEntities OE = new OrganizationEntities();
+            EmployeeDetail emp = await OE.EmployeeDetails.FindAsync(EmployeeId.ToString());
+            return emp;
         }
 
         public void UpdateEmployee(string empid, string empname, string emailId, string phone, int salary, string city)
